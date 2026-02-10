@@ -1,0 +1,26 @@
+# .env.local
+.env
+
+# Dependencies
+node_modules/
+venv/
+env/
+
+# Next.js
+.next/
+out/
+
+# Database
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Uploads
+uploads/

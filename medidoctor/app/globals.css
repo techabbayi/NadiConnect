@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  /* Medical Theme - Professional Hospital Colors */
+  --medical-blue-primary: #0066CC;
+  --medical-blue-dark: #004E99;
+  --medical-green: #00A651;
+  --medical-green-dark: #008544;
+  --medical-red: #D32F2F;
+  --medical-red-dark: #C62828;
+  --medical-orange: #FF9800;
+  --medical-grey: #F5F5F5;
+  --medical-border: #E0E0E0;
+  --medical-text: #212121;
+  --medical-text-light: #757575;
+  --background: #FFFFFF;
+  --foreground: #212121;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #F8F9FA;
+  color: var(--medical-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Professional Medical Card Shadows */
+.medical-card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.medical-card-hover:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Toast Animation */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}

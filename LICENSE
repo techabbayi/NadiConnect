@@ -1,0 +1,52 @@
+MIT License
+
+Copyright (c) 2026 MediDoctor AI Platform
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+IMPORTANT DISCLAIMERS:
+
+1. MEDICAL DISCLAIMER
+   This software is a PROTOTYPE for demonstration and educational purposes only.
+   It is NOT intended for real medical diagnosis, treatment, or healthcare advice.
+   Always consult qualified healthcare professionals for medical guidance.
+
+2. NO MEDICAL LIABILITY
+   The authors and contributors of this software assume NO LIABILITY for any
+   medical decisions made based on this software's output.
+
+3. NOT FOR CLINICAL USE
+   This software has NOT been validated for clinical use and should NOT be used
+   in any real healthcare setting without proper medical validation and approval.
+
+4. SIMULATED AI
+   The AI capabilities in this software are SIMULATED using rule-based logic.
+   This is NOT a real machine learning model and accuracy is NOT guaranteed.
+
+5. USE AT YOUR OWN RISK
+   By using this software, you acknowledge and accept all risks associated with
+   its use, and you agree that it is for demonstration purposes only.
+
+6. REGULATORY COMPLIANCE
+   This software has NOT been approved by any medical regulatory authority
+   (FDA, CE, etc.) and is NOT intended for regulated medical use.
+
+For any questions about appropriate use, please contact the maintainers.
