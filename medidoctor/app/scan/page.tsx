@@ -7,7 +7,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import Disclaimer from '@/components/Disclaimer';
 import Navbar from '@/components/Navbar';
 import { apiService } from '@/services/api';
-import { ArrowLeft, Camera, Info } from 'lucide-react';
+import { ArrowLeft, Camera, Info, Activity } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ScanPage() {
@@ -98,11 +98,28 @@ export default function ScanPage() {
                 {capturedFile && !isScanning && (
                     <button
                         onClick={handleScan}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 border-2 border-blue-700 shadow-sm transition-colors mb-6"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 border-2 border-blue-700 shadow-sm transition-colors mb-4"
                     >
                         Analyze with AI
                     </button>
                 )}
+
+                {/* Alternative: Health Assessment */}
+                <div className="bg-green-50 border-2 border-green-200 p-6 mb-6">
+                    <div className="flex items-center gap-3 mb-3">
+                        <Activity className="w-6 h-6 text-green-600" />
+                        <h3 className="font-bold text-gray-900">Don&apos;t have an image?</h3>
+                    </div>
+                    <p className="text-sm text-gray-700 mb-4">
+                        Get AI-powered health analysis by answering questions or using voice input
+                    </p>
+                    <Link href="/health-assessment">
+                        <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 border-2 border-green-700 shadow-sm transition-colors flex items-center justify-center gap-2">
+                            <Activity className="w-5 h-5" />
+                            <span>Know Your Health - Voice & Questions</span>
+                        </button>
+                    </Link>
+                </div>
 
                 {/* Image Guidelines */}
                 <div className="bg-white border-2 border-gray-200 shadow-sm">

@@ -31,20 +31,29 @@ export default function Home() {
         <div className="bg-white border-2 border-gray-200 shadow-md mb-8">
           <div className="p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-3">
-              AI-Assisted Injury Assessment
+              AI-Assisted Health Services
             </h2>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Upload an injury photo for instant AI analysis, risk classification, and personalized medical guidance
+              Choose how you want to assess your health - scan injuries or get personalized health analysis
             </p>
-            <Link href="/scan">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 transition-colors flex items-center justify-center gap-3 mx-auto shadow-sm border-2 border-blue-700">
-                <Camera className="w-6 h-6" />
-                <span className="text-lg">Start Injury Scan</span>
-              </button>
-            </Link>
-            <p className="text-sm text-gray-500 mt-4">
-              Click to capture or upload an injury photograph
-            </p>
+            <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+              <Link href="/scan">
+                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 transition-colors flex items-center justify-center gap-3 shadow-sm border-2 border-blue-700">
+                  <Camera className="w-6 h-6" />
+                  <span className="text-lg">Scan Injury</span>
+                </button>
+              </Link>
+              <Link href="/health-assessment">
+                <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 transition-colors flex items-center justify-center gap-3 shadow-sm border-2 border-green-700">
+                  <Activity className="w-6 h-6" />
+                  <span className="text-lg">Know Your Health</span>
+                </button>
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto mt-3 text-sm text-gray-500">
+              <p>Capture or upload injury photographs</p>
+              <p>Voice & questionnaire-based assessment</p>
+            </div>
           </div>
         </div>
 

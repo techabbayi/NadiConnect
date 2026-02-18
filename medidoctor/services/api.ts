@@ -82,6 +82,81 @@ export interface AdminStats {
     }>;
 }
 
+export interface HealthAssessmentRequest {
+    pain_level: string;
+    swelling: string;
+    duration: string;
+    affected_area: string;
+    movement_difficulty: string;
+    redness: string;
+    warmth: string;
+    additional_notes?: string;
+}
+
+export interface HealthAssessmentResponse {
+    analysis_id: number;
+    risk_level: string;
+    risk_color: string;
+    risk_score: number;
+    risk_factors: string[];
+    urgency: string;
+    possible_conditions: Array<{
+        name: string;
+        probability: string;
+        description: string;
+    }>;
+    detected_patterns: string[];
+    recommendations: string[];
+    treatment_guidance: {
+        immediate_care: string[];
+        medications: string[];
+        activities: string[];
+        warning_signs: string[];
+    };
+    affected_area: string;
+    confidence_score: number;
+    timestamp: string;
+    analysis_method: string;
+    disclaimer: string;
+}
+
+export interface VoiceAnalysisResponse {
+    transcribed_text: string;
+    confidence: number;
+    detected_language: string;
+    extracted_info: {
+        pain_level: string;
+        pain_descriptors: string[];
+        swelling_severity: string;
+        affected_area: string;
+        additional_symptoms: string[];
+        duration: string;
+        original_text: string;
+    };
+    analysis: HealthAssessmentResponse;
+    timestamp: string;
+}
+
+export interface ChatMessageRequest {
+    message: string;
+    context?: Record<string, unknown>;
+}
+
+export interface ChatMessageResponse {
+    response: string;
+    intent: string;
+    confidence: number;
+    follow_up_questions: string[];
+    entities_detected: {
+        body_parts: string[];
+        symptoms: string[];
+        intensity?: string;
+        duration?: string;
+    };
+    timestamp: string;
+    conversation_id: number;
+}
+
 class ApiService {
     private baseURL: string;
 
@@ -176,6 +251,81 @@ class ApiService {
         } catch {
             return false;
         }
+    }
+
+    /**
+     * Analyze health assessment questionnaire
+     */
+    async analyzeHealthAssessment(assessment: HealthAssessmentRequest): Promise<HealthAssessmentResponse> {
+        const response = await fetch(`${this.baseURL}/api/health-assessment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(assessment),
+        });
+
+        if (!response.ok) {
+            throw new Error('Health assessment failed');
+        }
+
+        return response.json();
+    }
+
+    /**
+     * Analyze voice input
+     */
+    async analyzeVoice(audioFile: File): Promise<VoiceAnalysisResponse> {
+        const formData = new FormData();
+        formData.append('audio', audioFile);
+
+        const response = await fetch(`${this.baseURL}/api/voice-analysis`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Voice analysis failed');
+        }
+
+        return response.json();
+    }
+
+    /**
+     * Send chat message
+     */
+    async sendChatMessage(request: ChatMessageRequest): Promise<ChatMessageResponse> {
+        const response = await fetch(`${this.baseURL}/api/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        });
+
+        if (!response.ok) {
+            throw new Error('Chat request failed');
+        }
+
+        return response.json();
+    }
+
+    /**
+     * Get chat conversation history
+     */
+    async getChatHistory(): Promise<{
+        total_messages: number;
+        intents_discussed: string[];
+        entities_mentioned: Record<string, string[]>;
+        conversation_history: unknown[];
+    }> {
+        const response = await fetch(`${this.baseURL}/api/chat/history`);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch chat history');
+        }
+
+        return response.json();
     }
 }
 

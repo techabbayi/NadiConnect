@@ -18,12 +18,20 @@ from schemas import (
     DoctorResponse,
     BookingRequest,
     BookingResponse,
-    AdminStatsResponse
+    AdminStatsResponse,
+    HealthAssessmentRequest,
+    HealthAssessmentResponse,
+    VoiceAnalysisResponse,
+    ChatMessageRequest,
+    ChatMessageResponse
 )
 from services.ai_service import AIService
 from services.risk_service import RiskClassifier
 from services.guidance_service import GuidanceEngine
 from services.doctor_service import DoctorService
+from services.health_assessment_service import HealthAssessmentService
+from services.voice_service import VoiceService
+from services.chat_service import ChatService
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -51,6 +59,9 @@ ai_service = AIService()
 risk_classifier = RiskClassifier()
 guidance_engine = GuidanceEngine()
 doctor_service = DoctorService()
+health_assessment_service = HealthAssessmentService()
+voice_service = VoiceService()
+chat_service = ChatService()
 
 
 @app.get("/")
@@ -320,6 +331,163 @@ async def get_admin_stats():
             "recent_appointments": recent_appointments_data
         }
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/health-assessment", response_model=HealthAssessmentResponse)
+async def analyze_health_assessment(assessment: HealthAssessmentRequest):
+    """
+    Health Assessment Analysis
+    ---------------------------
+    Analyzes questionnaire responses using AI/ML and rule-based systems.
+    Provides comprehensive health analysis, risk assessment, and recommendations.
+    """
+    try:
+        # Convert request to dict
+        assessment_data = assessment.dict()
+
+        # Analyze using AI/ML and rule-based system
+        analysis = health_assessment_service.analyze_questionnaire(
+            assessment_data)
+
+        # Store assessment in database
+        from database import SessionLocal
+        db = SessionLocal()
+
+        scan_record = ScanResult(
+            injury_type=analysis['affected_area'],
+            confidence_score=analysis['confidence_score'],
+            risk_level=analysis['risk_level'],
+            image_path=None,
+            visual_notes=f"Health Assessment - {assessment_data.get('additional_notes', '')}"
+        )
+        db.add(scan_record)
+        db.commit()
+        db.refresh(scan_record)
+
+        # Update analysis with database ID
+        analysis['analysis_id'] = scan_record.id
+
+        db.close()
+
+        return analysis
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Assessment failed: {str(e)}")
+
+
+@app.post("/api/voice-analysis", response_model=VoiceAnalysisResponse)
+async def analyze_voice(audio: UploadFile = File(...)):
+    """
+    Voice-to-Text Analysis
+    -----------------------
+    Processes voice input, converts to text, extracts health information,
+    and performs AI/ML analysis.
+
+    Accepts audio formats: WAV, MP3, M4A, OGG, WEBM, FLAC
+    """
+    try:
+        # Validate audio format
+        if not voice_service.validate_audio_format(audio.filename):
+            raise HTTPException(
+                status_code=400,
+                detail="Unsupported audio format. Please use WAV, MP3, M4A, OGG, WEBM, or FLAC"
+            )
+
+        # Read audio content
+        audio_content = await audio.read()
+
+        # Save audio file (optional, for demo)
+        upload_dir = "uploads/voice"
+        os.makedirs(upload_dir, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        audio_filename = f"{upload_dir}/voice_{timestamp}.{audio.filename.split('.')[-1]}"
+
+        with open(audio_filename, "wb") as f:
+            f.write(audio_content)
+
+        # Process voice to text
+        voice_result = voice_service.process_audio(
+            audio_content, audio.filename)
+
+        # Extract health information from transcribed text
+        extracted_info = voice_service.extract_health_info_from_text(
+            voice_result["transcribed_text"]
+        )
+
+        # Analyze extracted information using health assessment service
+        assessment_data = {
+            "pain_level": extracted_info["pain_level"],
+            "swelling": extracted_info["swelling_severity"],
+            "duration": extracted_info["duration"],
+            "affected_area": extracted_info["affected_area"],
+            "movement_difficulty": "moderate" if "limited_mobility" in extracted_info["additional_symptoms"] else "mild",
+            "redness": "yes" if "redness" in extracted_info["additional_symptoms"] else "no",
+            "warmth": "yes" if "warmth" in extracted_info["additional_symptoms"] else "no"
+        }
+
+        analysis = health_assessment_service.analyze_questionnaire(
+            assessment_data)
+
+        # Store in database
+        from database import SessionLocal
+        db = SessionLocal()
+
+        scan_record = ScanResult(
+            injury_type=analysis['affected_area'],
+            confidence_score=voice_result["confidence"],
+            risk_level=analysis['risk_level'],
+            image_path=audio_filename,
+            visual_notes=f"Voice Analysis: {voice_result['transcribed_text']}"
+        )
+        db.add(scan_record)
+        db.commit()
+        db.close()
+
+        return {
+            "transcribed_text": voice_result["transcribed_text"],
+            "confidence": voice_result["confidence"],
+            "detected_language": voice_result["detected_language"],
+            "extracted_info": extracted_info,
+            "analysis": analysis,
+            "timestamp": datetime.now().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Voice analysis failed: {str(e)}")
+
+
+@app.post("/api/chat", response_model=ChatMessageResponse)
+async def chat_message(chat_request: ChatMessageRequest):
+    """
+    AI Chat Service
+    ---------------
+    Rule-based and AI-powered chat for health-related queries.
+    Provides conversational health guidance and answers questions.
+    """
+    try:
+        response = chat_service.process_message(
+            chat_request.message,
+            chat_request.context
+        )
+
+        return response
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
+
+
+@app.get("/api/chat/history")
+async def get_chat_history():
+    """Get conversation history summary"""
+    try:
+        summary = chat_service.get_conversation_summary()
+        return summary
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
