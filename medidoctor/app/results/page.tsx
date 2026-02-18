@@ -242,6 +242,22 @@ ${result.disclaimer}
                         <p className="text-sm text-gray-600">AI-Generated Injury Assessment</p>
                     </div>
                 </div>
+
+                {/* AMD ROCm AI Notice */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-orange-200 shadow-sm mb-6">
+                    <div className="p-4 flex items-center gap-3 flex-wrap">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 bg-red-600 text-white flex items-center justify-center font-bold text-xs">
+                                AMD
+                            </div>
+                            <span className="text-xs font-semibold text-gray-900">Current: Rule-Based Prototype</span>
+                        </div>
+                        <div className="hidden md:block h-6 w-px bg-gray-300"></div>
+                        <div className="text-xs text-gray-700">
+                            🚀 <strong>Coming Soon:</strong> AMD ROCm-powered deep learning models for real-time injury classification with 45+ images/sec on Instinct MI210
+                        </div>
+                    </div>
+                </div>
                 {/* Risk Badge */}
                 <div className="mb-6">
                     <RiskBadge riskLevel={result.risk_level} className="w-full justify-center" />

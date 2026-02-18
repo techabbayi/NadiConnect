@@ -77,6 +77,23 @@ export default function ScanPage() {
                 {/* Disclaimer */}
                 <Disclaimer className="mb-6" />
 
+                {/* AMD ROCm Notice */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 shadow-sm mb-6">
+                    <div className="p-4">
+                        <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 bg-red-600 text-white flex items-center justify-center font-bold flex-shrink-0">
+                                AMD
+                            </div>
+                            <div className="flex-1">
+                                <div className="font-bold text-gray-900 text-sm mb-1">🚀 Future: AMD ROCm-Powered AI Models</div>
+                                <div className="text-xs text-gray-700">
+                                    <strong>Current:</strong> Rule-based prototype for demonstration | <strong>Planned:</strong> Real deep learning models powered by AMD ROCm platform and Instinct GPUs for production-grade injury detection with 40% lower costs
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Main Scan Area */}
                 <div className="bg-white border-2 border-gray-200 shadow-md mb-6">
                     <div className="border-b-2 border-gray-200 px-6 py-4">

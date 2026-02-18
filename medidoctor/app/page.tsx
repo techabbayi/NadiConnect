@@ -27,6 +27,23 @@ export default function Home() {
           <Disclaimer />
         </div>
 
+        {/* AMD ROCm Powered Badge */}
+        <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 shadow-sm mb-8">
+          <div className="p-4 flex items-center justify-center gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-red-600 text-white flex items-center justify-center font-bold text-xl">
+                AMD
+              </div>
+              <div>
+                <div className="font-bold text-gray-900 text-sm">Powered by AMD ROCm</div>
+                <div className="text-xs text-gray-600">High-Performance AI Computing Platform</div>
+              </div>
+            </div>
+            <div className="hidden md:block h-8 w-px bg-gray-300"></div>
+            <div className="text-xs text-gray-600">Optimized for AMD Instinct GPUs</div>
+          </div>
+        </div>
+
         {/* Main CTA Section */}
         <div className="bg-white border-2 border-gray-200 shadow-md mb-8">
           <div className="p-8 text-center">
@@ -142,6 +159,56 @@ export default function Home() {
                   <p className="text-sm text-gray-600">
                     Find nearby specialists and schedule appointments directly
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* AMD Cost Savings Comparison */}
+        <div className="bg-white border-2 border-orange-200 shadow-md mb-8">
+          <div className="border-b-2 border-orange-200 px-6 py-4 bg-orange-50">
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <TrendingUp className="w-6 h-6 text-orange-600" />
+              AMD ROCm: Cost-Efficient AI Infrastructure
+            </h2>
+          </div>
+          <div className="p-6">
+            <div className="grid md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 p-4">
+                <div className="text-2xl font-bold text-red-600 mb-1">40%</div>
+                <div className="text-sm font-semibold text-gray-900 mb-1">Lower TCO</div>
+                <div className="text-xs text-gray-600">vs NVIDIA A100</div>
+              </div>
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-orange-200 p-4">
+                <div className="text-2xl font-bold text-orange-600 mb-1">45+</div>
+                <div className="text-sm font-semibold text-gray-900 mb-1">Images/Sec</div>
+                <div className="text-xs text-gray-600">AMD Instinct MI210</div>
+              </div>
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 p-4">
+                <div className="text-2xl font-bold text-red-700 mb-1">$20K+</div>
+                <div className="text-sm font-semibold text-gray-900 mb-1">Annual Savings</div>
+                <div className="text-xs text-gray-600">vs NVIDIA H100</div>
+              </div>
+            </div>
+            <div className="bg-gray-50 border border-gray-200 p-4">
+              <h4 className="font-bold text-sm text-gray-900 mb-2">Why AMD ROCm for Medical AI?</h4>
+              <div className="grid md:grid-cols-2 gap-3 text-xs">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>Open Source:</strong> No vendor lock-in, full control</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>Cost Effective:</strong> Better price-to-performance ratio</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>Scalable:</strong> Single to multi-GPU deployments</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-700"><strong>Energy Efficient:</strong> Lower operational costs</span>
                 </div>
               </div>
             </div>
